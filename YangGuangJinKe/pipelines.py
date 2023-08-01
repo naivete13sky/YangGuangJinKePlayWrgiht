@@ -6,7 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
-class ToutiaoPyppeteerPipeline(object):
+class YangGuangJinKePipeline(object):
     def process_item(self, item, spider):
         print("*"*30,item)
         # print(item)
