@@ -48,7 +48,7 @@ class YangGuangJinKeSpider(Spider):
 
             name_from_url = unquote(response.url.split('=')[-1])
             # print('name_from_url:',name_from_url)
-            with open(r'temp\{}.html'.format(str(name_from_url+'_'+int(round(time.time() * 1000)))), 'w', encoding='utf8') as f:
+            with open(r'temp\{}.html'.format(name_from_url+'_'+str(int(round(time.time() * 1000)))), 'w', encoding='utf8') as f:
                 f.write(response.text)
 
             item = YangGuangJinKeItem()
