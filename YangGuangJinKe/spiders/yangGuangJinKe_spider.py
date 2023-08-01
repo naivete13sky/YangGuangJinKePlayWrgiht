@@ -22,6 +22,7 @@ import pandas as pd
 import YangGuangJinKe.gl as gl
 from bs4 import BeautifulSoup
 import re
+from urllib.parse import unquote
 from YangGuangJinKe.items import YangGuangJinKeItem
 
 
@@ -44,7 +45,10 @@ class YangGuangJinKeSpider(Spider):
     def parse(self, response):
 
         if "苏州应时雨商务信息咨询有限公司" in response.text:
-            with open(r'temp\{}.html'.format(int(round(time.time() * 1000))), 'w', encoding='utf8') as f:
+
+            name_from_url = unquote(response.url.split('=')[-1])
+            # print('name_from_url:',name_from_url)
+            with open(r'temp\{}.html'.format(str(name_from_url+'_'+int(round(time.time() * 1000)))), 'w', encoding='utf8') as f:
                 f.write(response.text)
 
             item = YangGuangJinKeItem()
