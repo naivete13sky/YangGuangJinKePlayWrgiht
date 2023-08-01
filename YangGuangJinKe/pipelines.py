@@ -8,6 +8,6 @@
 
 class YangGuangJinKePipeline(object):
     def process_item(self, item, spider):
-        print("*"*30,item)
-        # print(item)
+        print('YangGuangJinKePipeline'.center(30, '❤'))
+        print(item)
         return item

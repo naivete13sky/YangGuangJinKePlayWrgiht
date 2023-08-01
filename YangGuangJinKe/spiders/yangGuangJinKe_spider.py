@@ -61,7 +61,7 @@ class YangGuangJinKeSpider(Spider):
 
             # print("df[1]:", df[1])
             # print("df[2]:", df[2])
-            print("df[3]:",df[3])
+            # print("df[3]:", df[3])
             # print("df[4]:", df[4])
             # print("df[5]:", df[5])
             # print("df[6]:", df[6])
