@@ -95,7 +95,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
         return HtmlResponse(url=request.url, body=task.result(), encoding="utf-8", request=request)
 
     async def usePypuppeteer(self, request):
-        print(request.url)
+        print('request.url:',request.url)
 
         #在打开正常页面地址前，先打开下面这个页面的目的是使得每次搜索前先恢复到原始状态。
         await self.page.goto('https://osms-web-prd.hyan-tech.com/#/outsourceOwnQueue')
@@ -109,8 +109,9 @@ class YangGuangJinKeDownloaderMiddleware(object):
         # print("response:",response)
         soup = BeautifulSoup(response, 'lxml')
         current_toushuanjian_s = soup.select('#app > div > div > section > div.nav-tabs.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.el-dialog__wrapper.settleDialog > div > div.el-dialog__body > span')
-        print("length:",len(current_toushuanjian_s))
+        # print("current_toushuanjian_s length:",len(current_toushuanjian_s))
         if len(current_toushuanjian_s) == 1:
+            print("current_toushuanjian_s length:", len(current_toushuanjian_s))
             current_toushuanjian = soup.select('#app > div > div > section > div.nav-tabs.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.el-dialog__wrapper.settleDialog > div > div.el-dialog__body > span')[0].text
             print("current_toushuanjian:",current_toushuanjian)
             await self.page.click('#app > div > div > section > div.nav-tabs.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.el-dialog__wrapper.settleDialog > div > div.el-dialog__footer > span > button')
@@ -127,7 +128,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
             '#app > div > div > section > div.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.row-content.el-row.is-justify-space-between.el-row--flex > div.el-col.el-col-18 > div > div.carousel1.el-carousel.el-carousel--horizontal > div > div.el-carousel__item.is-active.is-animating > div > div > div:nth-child(4) > div:nth-child(1) > div > span')[
             0].text
         if len(current_sfzh_cc) == 11:
-            print("find 11 sfzh!")
+            print("find 11 sfzh!身份证号被数据脱敏了，需要点击得到明文身份证号！")
             time.sleep(1)
             await self.page.click('#app > div > div > section > div.nav-tabs.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.row-content.el-row.is-justify-space-between.el-row--flex > div.el-col.el-col-18 > div > div.carousel1.el-carousel.el-carousel--horizontal > div > div.el-carousel__item.is-active.is-animating > div > div > div:nth-child(4) > div:nth-child(1) > div > i')#点击获取明文身份证号
             time.sleep(1)
