@@ -16,7 +16,7 @@ class YangGuangJinKePipeline(object):
 
     def open_spider(self, spider):
         pass
-        self.conn = sqlite3.connect("my_scrapy3.db")
+        self.conn = sqlite3.connect("my_scrapy_yangGuangJinKe.db")
 
 
     def close_spider(self, spider):
@@ -83,7 +83,7 @@ class YangGuangJinKePipeline_sql(object):
         pass
 
     def open_spider(self, spider):
-        self.connection = sqlite3.connect('my_scrapy3.db')
+        self.connection = sqlite3.connect('my_scrapy_yangGuangJinKe.db')
         self.cursor = self.connection.cursor()
         self.create_table()
 
