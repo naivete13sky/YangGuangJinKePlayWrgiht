@@ -182,6 +182,26 @@ class YangGuangJinKeSpider(Spider):
             item['name']=current_name
             item['bdh'] = current_bdh
             item['sfzh'] = current_sfzh
+            item['br_mobile'] = br_mobile
+
+            item['pe_name'] = pe_name
+            item['pe_mobile'] = pe_mobile
+
+            item['xd_name'] = xd_name
+            item['xd_mobile'] = xd_mobile
+
+            item['fq_name'] = fq_name
+            item['fq_mobile'] = fq_mobile
+
+            item['mq_name'] = mq_name
+            item['mq_mobile'] = mq_mobile
+
+            item['ts_name'] = ts_name
+            item['ts_mobile'] = ts_mobile
+
+            item['qt_name'] = qt_name
+            item['qt_mobile'] = qt_mobile
+
             yield item
 
             print("*"*30,"current finish","*"*30)

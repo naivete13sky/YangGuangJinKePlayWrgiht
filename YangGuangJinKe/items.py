@@ -15,14 +15,22 @@ class YangGuangJinKeItem(scrapy.Item):
     name = scrapy.Field()
     bdh = scrapy.Field()
     sfzh = scrapy.Field()
-    self_mobile = scrapy.Field()
+    br_mobile = scrapy.Field()
 
     pe_name = scrapy.Field()
     pe_mobile = scrapy.Field()
 
-    jr_name = scrapy.Field()
-    jr_mobile = scrapy.Field()
+    xd_name = scrapy.Field()
+    xd_mobile = scrapy.Field()
+
+    fq_name = scrapy.Field()
+    fq_mobile = scrapy.Field()
+
+    mq_name = scrapy.Field()
+    mq_mobile = scrapy.Field()
 
     ts_name = scrapy.Field()
     ts_mobile = scrapy.Field()
 
+    qt_name = scrapy.Field()
+    qt_mobile = scrapy.Field()

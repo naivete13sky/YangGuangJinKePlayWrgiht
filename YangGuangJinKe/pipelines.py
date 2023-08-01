@@ -21,12 +21,8 @@ class YangGuangJinKePipeline(object):
         self.connection.close()
 
     def process_item(self, item, spider):
+        print('YangGuangJinKePipeline_insert_item'.center(30, '❤'))
         self.insert_item(item)
-        return item
-
-    def process_item0(self, item, spider):
-        print('YangGuangJinKePipeline'.center(30, '❤'))
-        print(item)
         return item
 
     def create_table(self):
@@ -34,7 +30,21 @@ class YangGuangJinKePipeline(object):
             CREATE TABLE IF NOT EXISTS temp_table (
                                         name TEXT,
                                         bdh TEXT,
-                                        sfzh TEXT
+                                        sfzh TEXT,
+                                        br_mobile,
+                                        pe_name,
+                                        pe_mobile,
+                                        xd_name,
+                                        xd_mobile,
+                                        fq_name,
+                                        fq_mobile,
+                                        mq_name,
+                                        mq_mobile,
+                                        ts_name,
+                                        ts_mobile,
+                                        qt_name,
+                                        qt_mobile
+                                        
             )
         ''')
 
@@ -42,10 +52,28 @@ class YangGuangJinKePipeline(object):
 
     def insert_item(self, item):
         self.cursor.execute('''
-        INSERT INTO temp_table (name, bdh, sfzh)
-                                    VALUES (?, ?, ?)
-                                    ''',
-                          (item['name'], item['bdh'], item['sfzh'])
+        INSERT INTO temp_table (name, bdh, sfzh,br_mobile,
+                                        pe_name,pe_mobile,
+                                        xd_name,xd_mobile,
+                                        fq_name,fq_mobile,
+                                        mq_name,mq_mobile,
+                                        ts_name,ts_mobile,
+                                        qt_name,qt_mobile)
+                                    VALUES (?, ?, ?,?,
+                                        ?,?,
+                                        ?,?,
+                                        ?,?,
+                                        ?,?,
+                                        ?,?,
+                                        ?,?
+                                    )
+                                    ''',(item['name'], item['bdh'], item['sfzh'],item['br_mobile'],
+                           item['pe_name'],item['pe_mobile'],
+                           item['xd_name'], item['xd_mobile'],
+                           item['fq_name'], item['fq_mobile'],
+                           item['mq_name'], item['mq_mobile'],
+                           item['ts_name'], item['ts_mobile'],
+                           item['qt_name'], item['qt_mobile'])
                             )
         self.connection.commit()
 
