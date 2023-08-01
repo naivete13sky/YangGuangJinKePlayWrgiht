@@ -131,8 +131,10 @@ dmypy.json
 
 #cc
 /YangGuangJinKe/temp/
+/YangGuangJinKe/my_scrapy3.db
 /YangGuangJinKe/name.xlsx
 /YangGuangJinKe/web.png
+
 
 
 
