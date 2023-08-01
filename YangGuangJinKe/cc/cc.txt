@@ -1,0 +1,11 @@
+    spider.py中获取url。
+    def parse(self, response):
+        if "苏州应时雨商务信息咨询有限公司" in response.text:
+            from urllib.parse import unquote
+            name_from_url = unquote(response.url.split('=')[-1])
+
+
+
+
+
+

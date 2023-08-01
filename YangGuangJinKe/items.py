@@ -34,3 +34,5 @@ class YangGuangJinKeItem(scrapy.Item):
 
     qt_name = scrapy.Field()
     qt_mobile = scrapy.Field()
+
+    responseText = scrapy.Field()#网页内容

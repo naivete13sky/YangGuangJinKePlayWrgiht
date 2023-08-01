@@ -5,6 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import sqlite3
+import time
+
 import pandas as pd
 
 class YangGuangJinKePipeline(object):
@@ -23,7 +25,7 @@ class YangGuangJinKePipeline(object):
 
     def process_item(self, item, spider):
         pass
-        # 创建一条记录
+        # 创建一条记录，通过pandas保存到数据库
         name = item['name']
         bdh = item['bdh']
         sfzh = item['sfzh']
@@ -56,10 +58,17 @@ class YangGuangJinKePipeline(object):
                             '同事手机号': ts_mobile,
                             '其他': qt_name,
                             '其他手机号': qt_mobile,
-                            }, index=[1]
+                            },
+                           index=[1]
                            )  # 自定义索引为：1 ，这里也可以不设置index
 
         new.to_sql("cc", self.conn, if_exists='append', index=False)
+
+
+        # 保存网页到临时文件夹
+        with open(r'temp\{}.html'.format(name+'_'+str(int(round(time.time() * 1000)))), 'w', encoding='utf8') as f:
+            f.write(item['responseText'])
+
 
     def create_table(self):
         pass
