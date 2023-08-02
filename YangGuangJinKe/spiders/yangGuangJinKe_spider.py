@@ -58,6 +58,9 @@ class YangGuangJinKeSpider(Spider):
             # print("my_df:",my_df)
             my_df = df_all[3]
             print('{0}的联系方式纪录数'.format(item['name']), len(my_df))
+            if len(my_df) == 0:
+                pass
+                return
             # 本人手机号
             item['br_mobile'] = my_df[(my_df[2] == "本人") & (my_df[3] == "移动电话")].values[0][0]
 
