@@ -2,13 +2,16 @@
 from bs4 import BeautifulSoup
 from pyppeteer import launch
 import base64,json,time
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 import gl as gl
 from scrapy import signals
 from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 import random
 import pyppeteer
 import asyncio
-import os
+
 from scrapy.http import HtmlResponse
 
 pyppeteer.DEBUG = False
@@ -27,7 +30,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
         loop = asyncio.get_event_loop()
 
         # print("*" * 30, "log in", "*" * 30)
-        task = asyncio.ensure_future(self.login('wangyufeng-wwyg', 'Cc123456.', 'https://osms-web-prd.hyan-tech.com/#/login'))
+        task = asyncio.ensure_future(self.login('wangyufeng-wwyg', 'Cc123456*', 'https://osms-web-prd.hyan-tech.com/#/login'))
         # task = asyncio.ensure_future(self.login('weijun-wwyg', 'Wj~202181', 'https://osms.sinosig.com/#/login'))
         # task = asyncio.ensure_future(self.login('fengtaozhao-wwyg', 'Ftz123...', 'https://osms.sinosig.com/#/login'))
         print("*" * 30, "log in finish", "*" * 30)
