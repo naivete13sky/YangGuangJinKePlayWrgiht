@@ -35,4 +35,4 @@ pyinstaller --exclude "settings/*" --add-data "static;static" --add-data "settin
 根据main.spec文件打包，上面那个命令中设置参数的方法生成了main.spec文件，后续可以在此文件上修改参数，然后根据此配置文件打包。
 pyinstaller .\main.spec
 
-
+pyinstaller .\run.spec
