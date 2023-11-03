@@ -36,3 +36,5 @@ pyinstaller --exclude "settings/*" --add-data "static;static" --add-data "settin
 pyinstaller .\main.spec
 
 pyinstaller .\run.spec
+
+对于Jinke，打包后，需要把YangGuangJinKe文件下的文件结构都弄下。
