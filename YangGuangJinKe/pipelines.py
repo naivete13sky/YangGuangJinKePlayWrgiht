@@ -8,6 +8,10 @@ import sqlite3
 import time
 
 import pandas as pd
+from tabulate import tabulate
+
+from YangGuangJinKe import gl
+
 
 class YangGuangJinKePipeline(object):
 
@@ -64,6 +68,15 @@ class YangGuangJinKePipeline(object):
 
         new.to_sql("cc", self.conn, if_exists='append', index=False)
 
+        # 假设 df 是你的 DataFrame
+        pd.set_option('display.max_columns', None)
+        pd.set_option('display.max_rows', None)
+        pd.set_option('display.width', None)
+
+        # print(new.to_string(index=False, line_width=None))
+        print(tabulate(new, headers='keys', tablefmt='psql', showindex=False))
+        # with pd.option_context('display.max_rows', None, 'display.max_columns', None, 'display.width', 1000):
+        #     print(new)
 
         # 保存网页到临时文件夹
         with open(r'temp\{}.html'.format(str(int(round(time.time() * 1000)))+'_'+name), 'w', encoding='utf8') as f:

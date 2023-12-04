@@ -33,6 +33,10 @@ class YangGuangJinKeSpider(Spider):
         gl.search_bdh = (df_name.iloc[[each], [1]].values[0][0])
         start_urls.append('https://osms-web-prd.hyan-tech.com/#/caseDetails?policyCode={}&name={}'.format(gl.search_bdh,gl.search_name))
 
+    def __init__(self, *args, **kwargs):
+        super(YangGuangJinKeSpider, self).__init__(*args, **kwargs)
+        self.crawled_count = 0
+
 
     def parse(self, response):
         if "苏州应时雨商务信息咨询有限公司" in response.text:
@@ -59,7 +63,7 @@ class YangGuangJinKeSpider(Spider):
             # print("df[8]:", df[8])
             # print("my_df:",my_df)
             my_df = df_all[3]
-            print('{0}的联系方式纪录数'.format(item['name']), len(my_df))
+            # print('{0}的联系方式纪录数'.format(item['name']), len(my_df))
             if len(my_df) == 0:
                 pass
                 return
@@ -89,6 +93,11 @@ class YangGuangJinKeSpider(Spider):
 
 
             item['responseText'] = response.text#网页内容也作为一个字段传给pipelines。
+
+            # 每爬取完一个页面，增加计数
+            self.crawled_count += 1
+            name = item['name']
+            print(f'第{self.crawled_count}个,{name}的信息如下:')
 
             yield item
 

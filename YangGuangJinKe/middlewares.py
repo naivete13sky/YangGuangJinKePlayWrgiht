@@ -60,7 +60,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
         mask_code=input("请输入验证码：")# 输入验证码
         await self.page.type(gl.css_login_mask_code, mask_code)
         await self.page.click('#app > div > div.login-panel > div > button')#点击登录
-        time.sleep(2)
+        time.sleep(1.5)
         return self.page
 
 
@@ -89,11 +89,12 @@ class YangGuangJinKeDownloaderMiddleware(object):
         return HtmlResponse(url=request.url, body=task.result(), encoding="utf-8", request=request)
 
     async def usePypuppeteer(self, request):
-        print('request.url:',request.url)
+        # print('request.url:',request.url)
+
 
         #在打开正常页面地址前，先打开下面这个页面的目的是使得每次搜索前先恢复到原始状态。
         await self.page.goto('https://osms-web-prd.hyan-tech.com/#/outsourceOwnQueue')
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(0.1)
 
         await self.page.goto(request.url)
         await asyncio.sleep(0.5)
@@ -122,10 +123,9 @@ class YangGuangJinKeDownloaderMiddleware(object):
             '#app > div > div > section > div.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.row-content.el-row.is-justify-space-between.el-row--flex > div.el-col.el-col-18 > div > div.carousel1.el-carousel.el-carousel--horizontal > div > div.el-carousel__item.is-active.is-animating > div > div > div:nth-child(4) > div:nth-child(1) > div > span')[
             0].text
         if len(current_sfzh_cc) == 11:
-            print("find 11 sfzh!身份证号被数据脱敏了，需要点击得到明文身份证号！")
-            time.sleep(0.5)
+            # print("find 11 sfzh!身份证号被数据脱敏了，需要点击得到明文身份证号！")
             await self.page.click('#app > div > div > section > div.nav-tabs.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.row-content.el-row.is-justify-space-between.el-row--flex > div.el-col.el-col-18 > div > div.carousel1.el-carousel.el-carousel--horizontal > div > div.el-carousel__item.is-active.is-animating > div > div > div:nth-child(4) > div:nth-child(1) > div > i')#点击获取明文身份证号
-            time.sleep(0.5)
+            time.sleep(0.25)  # 如果不等待，身份证号可能会有*号，等待太快也会有*号。
         else:
             print('sfzh len:',len(current_sfzh_cc))
         content = await self.page.content()
