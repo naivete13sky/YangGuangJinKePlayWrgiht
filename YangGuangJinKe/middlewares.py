@@ -60,7 +60,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
         mask_code=input("请输入验证码：")# 输入验证码
         await self.page.type(gl.css_login_mask_code, mask_code)
         await self.page.click('#app > div > div.login-panel > div > button')#点击登录
-        time.sleep(3)
+        time.sleep(2)
         return self.page
 
 
@@ -93,10 +93,10 @@ class YangGuangJinKeDownloaderMiddleware(object):
 
         #在打开正常页面地址前，先打开下面这个页面的目的是使得每次搜索前先恢复到原始状态。
         await self.page.goto('https://osms-web-prd.hyan-tech.com/#/outsourceOwnQueue')
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.5)
 
         await self.page.goto(request.url)
-        await asyncio.sleep(3)
+        await asyncio.sleep(0.5)
 
         #如果是“当前案件为投诉案件，请谨慎催收！”情况。要点击弹窗提示。
         response = await self.page.content()
@@ -113,7 +113,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
 
         #鼠标滚动到底
         await self.page.evaluate('window.scrollBy(0, document.body.scrollHeight)')
-        await asyncio.sleep(3)
+        await asyncio.sleep(0.5)
         # content = await self.page.content()
         #下面是把身份证变成没有*。点击身份证号前面的放大镜。
         response=await self.page.content()
@@ -123,9 +123,9 @@ class YangGuangJinKeDownloaderMiddleware(object):
             0].text
         if len(current_sfzh_cc) == 11:
             print("find 11 sfzh!身份证号被数据脱敏了，需要点击得到明文身份证号！")
-            time.sleep(1)
+            time.sleep(0.5)
             await self.page.click('#app > div > div > section > div.nav-tabs.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.row-content.el-row.is-justify-space-between.el-row--flex > div.el-col.el-col-18 > div > div.carousel1.el-carousel.el-carousel--horizontal > div > div.el-carousel__item.is-active.is-animating > div > div > div:nth-child(4) > div:nth-child(1) > div > i')#点击获取明文身份证号
-            time.sleep(1)
+            time.sleep(0.5)
         else:
             print('sfzh len:',len(current_sfzh_cc))
         content = await self.page.content()

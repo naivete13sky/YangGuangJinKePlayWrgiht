@@ -20,6 +20,7 @@ import pandas as pd
 import YangGuangJinKe.gl as gl
 from bs4 import BeautifulSoup
 from YangGuangJinKe.items import YangGuangJinKeItem
+from io import StringIO
 
 
 class YangGuangJinKeSpider(Spider):
@@ -44,7 +45,8 @@ class YangGuangJinKeSpider(Spider):
                 '#app > div > div > section > div.el-tabs.el-tabs--top > div.el-tabs__content > div.containter > div.row-content.el-row.is-justify-space-between.el-row--flex > div.el-col.el-col-18 > div > div.carousel1.el-carousel.el-carousel--horizontal > div > div.el-carousel__item.is-active.is-animating > div > div > div:nth-child(4) > div:nth-child(1) > div > span')[
                 0].text
 
-            df_all = pd.read_html(response.text)
+            # df_all = pd.read_html(response.text)
+            df_all = pd.read_html(StringIO(response.text))
             # print("df:",df)
             # my_df = df[4]
             # print("df[1]:", df[1])
