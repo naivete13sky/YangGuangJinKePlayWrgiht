@@ -48,6 +48,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
     async def login(self,username, password, url):
         # 'headless': False如果想要浏览器隐藏更改False为True
         self.browser = await launch({'headless': False, 'args': ['--no-sandbox']})
+
         self.page = await self.browser.newPage()
         await self.page.setUserAgent('Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36')
         await self.page.goto(url)
