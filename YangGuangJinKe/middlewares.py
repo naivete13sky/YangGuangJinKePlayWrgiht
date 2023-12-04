@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
-# from pyppeteer import launch
+from playwright.async_api import Playwright,async_playwright
 import base64,json,time
 import sys
 import os
@@ -9,12 +9,9 @@ import gl as gl
 from scrapy import signals
 from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 import random
-import pyppeteer
 import asyncio
-
 from scrapy.http import HtmlResponse
 
-pyppeteer.DEBUG = False
 
 
 class YangGuangJinKeDownloaderMiddleware(object):
@@ -22,11 +19,7 @@ class YangGuangJinKeDownloaderMiddleware(object):
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
     def __init__(self):
-        print("Init downloaderMiddleware use pypputeer.")
-        # os.environ['PYPPETEER_CHROMIUM_REVISION'] = '588429'
-        # pyppeteer.DEBUG = False
-        # print(os.environ.get('PYPPETEER_CHROMIUM_REVISION'))
-
+        print("Init downloaderMiddleware use playWright.")
         loop = asyncio.get_event_loop()
 
         # print("*" * 30, "log in", "*" * 30)
@@ -46,21 +39,18 @@ class YangGuangJinKeDownloaderMiddleware(object):
         # self.page = await browser.newPage()
 
     async def login(self,username, password, url):
-        # 'headless': False如果想要浏览器隐藏更改False为True
-        self.browser = await launch({'headless': False, 'args': ['--no-sandbox']})
-
-        self.page = await self.browser.newPage()
-        await self.page.setUserAgent('Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36')
+        playwright = await async_playwright().__aenter__()
+        self.browser = await playwright.chromium.launch(headless=False)
+        self.context = await self.browser.new_context()
+        self.user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36'
+        await self.context.set_extra_http_headers({"User-Agent": self.user_agent})
+        self.page = await self.context.new_page()
         await self.page.goto(url)
         await self.page.type(gl.css_login_user, username) # 输入用户名
         await self.page.type(gl.css_login_pwd, password)# 输入密码
         #获取验证码，先找到图片，再保存到本地
         html_content = await self.page.content()
         soup = BeautifulSoup(html_content, 'html.parser')
-
-        # mask_code_png_src_all = soup.find_all('img')
-        # for each in mask_code_png_src_all:
-        #     print(each)
 
         mask_code_png_src = soup.find_all('img')[1].get('src')
         encode_img = mask_code_png_src.split(',')[1]
