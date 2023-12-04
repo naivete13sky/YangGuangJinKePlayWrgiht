@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/YangGuangJinKe/temp" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (scrapy)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 virtualenv at D:\cc\Envs\scrapy" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
