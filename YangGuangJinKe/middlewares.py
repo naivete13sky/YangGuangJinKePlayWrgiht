@@ -21,22 +21,13 @@ class YangGuangJinKeDownloaderMiddleware(object):
     def __init__(self):
         print("Init downloaderMiddleware use playWright.")
         loop = asyncio.get_event_loop()
-
-        # print("*" * 30, "log in", "*" * 30)
         task = asyncio.ensure_future(self.login('wangyufeng-wwyg', 'Cc123456*', 'https://osms-web-prd.hyan-tech.com/#/login'))
         # task = asyncio.ensure_future(self.login('weijun-wwyg', 'Wj~202181', 'https://osms.sinosig.com/#/login'))
         # task = asyncio.ensure_future(self.login('fengtaozhao-wwyg', 'Ftz123...', 'https://osms.sinosig.com/#/login'))
-        print("*" * 30, "log in finish", "*" * 30)
+        print("log in finish".center(100,'*'))
         # print("*" * 30, "task:",task, "*" * 30)
         loop.run_until_complete(task)
-
-        # self.browser = task.result()
-        print("*"*30,"init finish","*"*30)
-
-
-        # print(self.browser)
-        # print(self.page)
-        # self.page = await browser.newPage()
+        print("init finish".center(100,'*'))
 
     async def login(self,username, password, url):
         playwright = await async_playwright().__aenter__()
@@ -51,7 +42,6 @@ class YangGuangJinKeDownloaderMiddleware(object):
         #获取验证码，先找到图片，再保存到本地
         html_content = await self.page.content()
         soup = BeautifulSoup(html_content, 'html.parser')
-
         mask_code_png_src = soup.find_all('img')[1].get('src')
         encode_img = mask_code_png_src.split(',')[1]
         with open("web.png", 'wb') as f:
@@ -62,7 +52,6 @@ class YangGuangJinKeDownloaderMiddleware(object):
         await self.page.click('#app > div > div.login-panel > div > button')#点击登录
         time.sleep(1.5)
         return self.page
-
 
 
     @classmethod
@@ -85,17 +74,13 @@ class YangGuangJinKeDownloaderMiddleware(object):
         loop = asyncio.get_event_loop()
         task = asyncio.ensure_future(self.usePypuppeteer(request))
         loop.run_until_complete(task)
-        # return task.result()
         return HtmlResponse(url=request.url, body=task.result(), encoding="utf-8", request=request)
 
     async def usePypuppeteer(self, request):
         # print('request.url:',request.url)
-
-
         #在打开正常页面地址前，先打开下面这个页面的目的是使得每次搜索前先恢复到原始状态。
         await self.page.goto('https://osms-web-prd.hyan-tech.com/#/outsourceOwnQueue')
         await asyncio.sleep(0.1)
-
         await self.page.goto(request.url)
         await asyncio.sleep(0.5)
 
